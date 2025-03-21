@@ -11,4 +11,14 @@ public interface AddressService {
     void deleteAddress(Integer id);
     Optional<Address> findById(Integer id);
     List<Address> findAll();
+
+    // Customer related operations
+    List<Address> findAddressByCustomerId(Integer customerId);
+
+    // Default address operation
+    Address setDefaultAddress(Integer addressId, Integer customerId);
+    Optional<Address> getDefaultAddressForCustomer(Integer customerId);
+
+    // Address validation
+    boolean isValidAddress(Address address);
 }
