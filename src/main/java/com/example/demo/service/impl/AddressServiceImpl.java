@@ -44,4 +44,26 @@ public class AddressServiceImpl implements AddressService {
 
         return addressRepository.save(address);
     }
+
+    @Override
+    public Address updateAddress (Address address) {
+        // does address exist
+        if (address.getId() == null || !addressRepository.existsById(address.getId())) {
+            throw new EntityNotFoundException("Cannot update non-existent address");
+        }
+        return addressRepository.save(address);
+    }
+
+    @Override
+    public void deleteAddress(Integer id) {
+        // check if this is default address
+        Optional<Address> addressOpt = addressRepository.findById(id);
+        if (addressOpt.isPresent() && addressOpt.get().getIsDefault()) {
+            Address address = addressOpt.get();
+
+            // Find another address for this customer to make default
+            List<Address> otherAddresses = addressRepository
+                .findByCustomerIdAndIdnot(address.getCustomer().getId());
+        }
+    }
 }
