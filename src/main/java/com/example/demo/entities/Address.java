@@ -95,4 +95,7 @@ public class Address {
         return customerOrders;
     }
 
+    public void setIsDefault(Boolean isDefault) {
+        this.isDefault = isDefault;
+    }
 }

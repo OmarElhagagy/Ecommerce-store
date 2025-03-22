@@ -36,7 +36,12 @@ public class AddressServiceImpl implements AddressService {
         Customer customer = customerRepository.findById(address.getCustomer().getId())
             .orElseThrow(() -> new EntityNotFoundException("Customer not found with ID " + address.getCustomer().getId()));
 
-        // If this is customer's first address make it default
+        // If this is the customer's first address, make it default
         List<Address> existingAddresses = addressRepository.findByCustomerId(customer.getId());
+        if (existingAddresses.isEmpty()) {
+            address.setIsDefault(true);
+        }
+
+        return addressRepository.save(address);
     }
 }
