@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface AddressRepository extends JpaRepository<Address, Integer> {
     List<Address> findByCustomerId(Integer id);
+
+    List<Address> findByCustomerIdAndIdnot(Integer id);
 }
