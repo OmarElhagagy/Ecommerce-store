@@ -64,6 +64,13 @@ public class AddressServiceImpl implements AddressService {
             // Find another address for this customer to make default
             List<Address> otherAddresses = addressRepository
                 .findByCustomerIdAndIdNot(address.getCustomer().getId(), id);
+
+            if(!otherAddresses.isEmpty()) {
+                Address newDefault = otherAddresses.get(0); // gets first availabel address
+                newDefault.setIsDefault(true);
+                addressRepository.save(newDefault);
+            }
         }
+        addressRepository.deleteById(id);
     }
 }
