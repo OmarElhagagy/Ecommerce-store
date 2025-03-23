@@ -73,4 +73,50 @@ public class AddressServiceImpl implements AddressService {
         }
         addressRepository.deleteById(id);
     }
+
+    @Override
+    public Optional<Address> findById(Integer id) {
+        return addressRepository.findById(id);
+    }
+
+    @Override
+    public List<Address> findAll() {
+        return addressRepository.findAll();
+    }
+
+    @Override
+    public List<Address> findAddressByCustomerId(Integer id) {
+        return addressRepository.findByCustomerId(id);
+    }
+
+    @Override
+    @Transactional
+    public Address setDefaultAddress(Integer addressId, Integer customerId) {
+        // First, verify the address belongs to the customer
+        Address newDefaultAddress = addressRepository.findByIdAndCustomerId(addressId, customerId)
+            .orElseThrow(() -> new EntityNotFoundException(
+            "Address ID " + addressId + "not found for cusomter ID " + customerId));
+
+        // reset the default address
+        addressRepository.resetDefaultAddressForCustomer(customerId);
+
+        // set the new one
+        newDefaultAddress.setIsDefault(true);
+        return addressRepository.save(newDefaultAddress);
+    }
+
+    @Override
+    public Optional<Address> getDefaultAddressForCustomer(Integer customerId) {
+        return addressRepository.findByCustomerIdAndIsDefaultTrue(customerId);
+    }
+
+    @Override
+    public boolean isValidAddress(Address address){
+        // Basic validation logic
+        return address != null
+            && address.getStreet() != null &&address.getStreet().isEmpty()
+            && address.getCity() != null && address.getCity().isEmpty()
+            && address.getPostalCode() != null && address.getPostalCode().isEmpty()
+            && address.getCountry() != null && address.getCountry().isEmpty();
+    }
 }
