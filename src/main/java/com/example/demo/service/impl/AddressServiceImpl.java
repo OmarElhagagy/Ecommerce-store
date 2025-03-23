@@ -63,7 +63,7 @@ public class AddressServiceImpl implements AddressService {
 
             // Find another address for this customer to make default
             List<Address> otherAddresses = addressRepository
-                .findByCustomerIdAndIdnot(address.getCustomer().getId());
+                .findByCustomerIdAndIdNot(address.getCustomer().getId(), id);
         }
     }
 }
