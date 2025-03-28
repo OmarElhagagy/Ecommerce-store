@@ -16,4 +16,26 @@ public class AuditLogServiceImpl implements AuditLogService {
     public AuditLogServiceImpl(AuditLogRepository auditLogRepository) {
         this.auditLogRepository = auditLogRepository;
     }
+
+    @Override
+    public AuditLog createAuditLog(AuditLog auditLog) {
+        // Could add validation or preprocessing before saving maube later idk
+        auditLog.setTimestamp(Instant.now());
+        return auditLogRepository.save(auditLog);
+    }
+
+    @Override
+    public List<AuditLog> findByUserId(Integer userId) {
+        return auditLogRepository.findByUser_Id(userId);
+    }
+
+    @Override
+    public List<AuditLog> findByEmployeeId(Integer employeeId) {
+        return auditLogRepository.findByEmployee_Id(employeeId);
+    }
+
+    @Override
+    public List<AuditLog> findByTableName(String tableName) {
+        return auditLogRepository.findByTableName(tableName);
+    }
 }
