@@ -3,11 +3,14 @@ package com.example.demo.service.impl;
 import com.example.demo.entities.AuditLog;
 import com.example.demo.repositories.AuditLogRepository;
 import com.example.demo.service.AuditLogService;
+import com.example.demo.entities.Employee;
+import com.example.demo.entities.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -34,13 +37,13 @@ public class AuditLogServiceImpl implements AuditLogService {
     }
 
     @Override
-    public List<AuditLog> findByUserId(Integer userId) {
-        return auditLogRepository.findByUser_Id(userId);
+    public List<AuditLog> findByUser(User user) {
+        return auditLogRepository.findByUser(user);
     }
 
     @Override
-    public List<AuditLog> findByEmployeeId(Integer employeeId) {
-        return auditLogRepository.findByEmployee_Id(employeeId);
+    public List<AuditLog> findByEmployee(Employee employee) {
+        return auditLogRepository.findByEmployee(employee);
     }
 
     @Override
@@ -61,5 +64,10 @@ public class AuditLogServiceImpl implements AuditLogService {
     @Override
     public List<AuditLog> findAll() {
         return auditLogRepository.findAll();
+    }
+
+    @Override
+    public Optional<AuditLog> findByUserAndEmployee(User user, Employee employee) {
+        return auditLogRepository.findByUserAndEmployee(user, employee);
     }
 }
