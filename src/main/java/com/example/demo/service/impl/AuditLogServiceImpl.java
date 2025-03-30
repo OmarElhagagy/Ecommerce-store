@@ -3,6 +3,8 @@ package com.example.demo.service.impl;
 import com.example.demo.entities.AuditLog;
 import com.example.demo.repositories.AuditLogRepository;
 import com.example.demo.service.AuditLogService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.util.List;
@@ -13,6 +15,7 @@ public class AuditLogServiceImpl implements AuditLogService {
 
     private final AuditLogRepository auditLogRepository;
 
+    @Autowired
     public AuditLogServiceImpl(AuditLogRepository auditLogRepository) {
         this.auditLogRepository = auditLogRepository;
     }
@@ -53,5 +56,10 @@ public class AuditLogServiceImpl implements AuditLogService {
     @Override
     public List<AuditLog> findByTableNameAndRecordId(String tableName, Integer recordId) {
         return auditLogRepository.findByTableNameAndRecordId(tableName, recordId);
+    }
+
+    @Override
+    public List<AuditLog> findAll() {
+        return auditLogRepository.findAll();
     }
 }
