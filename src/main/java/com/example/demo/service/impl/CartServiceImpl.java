@@ -46,6 +46,36 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public Optional<Cart> getCartByCustomerAndProduct(Customer customer, Product product) {
-        return cartRepository.findByCustomerAndProduct(customer, product);
+        return cartRepository.findByCustomerAndproduct(customer, product);
+    }
+
+    @Override
+    @Transactional
+    public Cart saveCart(Cart cart) {
+        if(cart.getAddedDate() == null) {
+            cart.setAddedDate(LocalDate.now());
+        }
+        return cartRepository.save(cart);
+    }
+
+    @Override
+    @Transactional
+    public void deleteCart(Integer id) {
+        cartRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional
+    public boolean existsById(Integer id) {
+        return cartRepository.existsById(id);
+    }
+
+    @Override
+    @Transactional
+    public void updateCartQuantity(Integer cartId, Integer quantity){
+        cartRepository.findById(cartId).ifPresent(cart -> {
+            cart.setQuantity(quantity);
+            cartRepository.save(cart);
+        });
     }
 }
