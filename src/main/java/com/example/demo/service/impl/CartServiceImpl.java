@@ -3,7 +3,6 @@ package com.example.demo.service.impl;
 import com.example.demo.entities.Cart;
 import com.example.demo.entities.Customer;
 import com.example.demo.entities.Product;
-import com.example.demo.repositories.AddressRepository;
 import com.example.demo.repositories.CartRepository;
 import com.example.demo.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
