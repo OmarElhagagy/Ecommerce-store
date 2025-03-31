@@ -12,7 +12,7 @@ public interface CartService {
     Optional<Cart> getCartById(Integer id);
     List<Cart> getCartsByCustomer(Customer customer);
     List<Cart> getCartsByProduct(Product product);
-    Optional<Cart> getCartsByCustomerAndProduct(Customer customer, Product product);
+    Optional<Cart> getCartByCustomerAndProduct(Customer customer, Product product);
     Cart saveCart(Cart cart);
     void deleteCart(Integer id);
     boolean existsById(Integer id);

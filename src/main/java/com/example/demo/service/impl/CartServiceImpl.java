@@ -3,6 +3,7 @@ package com.example.demo.service.impl;
 import com.example.demo.entities.Cart;
 import com.example.demo.entities.Customer;
 import com.example.demo.entities.Product;
+import com.example.demo.repositories.AddressRepository;
 import com.example.demo.repositories.CartRepository;
 import com.example.demo.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,5 +22,30 @@ public class CartServiceImpl implements CartService {
     @Autowired
     public CartServiceImpl(CartRepository cartRepository) {
         this.cartRepository = cartRepository;
+    }
+
+    @Override
+    public List<Cart> getAllCarts() {
+        return cartRepository.findAll();
+    }
+
+    @Override
+    public Optional<Cart> getCartById(Integer id) {
+        return cartRepository.findById(id);
+    }
+
+    @Override
+    public List<Cart> getCartsByCustomer(Customer customer) {
+        return cartRepository.findByCustomer(customer);
+    }
+
+    @Override
+    public List<Cart> getCartsByProduct(Product product) {
+        return cartRepository.findByProduct(product);
+    }
+
+    @Override
+    public Optional<Cart> getCartByCustomerAndProduct(Customer customer, Product product) {
+        return cartRepository.findByCustomerAndProduct(customer, product);
     }
 }
