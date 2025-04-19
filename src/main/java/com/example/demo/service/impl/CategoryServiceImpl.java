@@ -21,8 +21,21 @@ public class CategoryServiceImpl implements CategoryService {
         this.categoryRepository = categoryRepository;
     }
 
-    @Service
+    @Override
     @Transactional(readOnly = true)
     public List<Category> findAll() {
+        return categoryRepository.findAll();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<Category> findById(Integer id) {
+        return categoryRepository.findById(id);
+    }
+
+    @Override
+    @Transactional
+    public Optional<Category> findByCategoryName(String name) {
+        return categoryRepository.findByCategoryName(name);
     }
 }
