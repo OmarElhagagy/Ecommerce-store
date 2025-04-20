@@ -11,13 +11,9 @@ import java.util.Optional;
 
 public interface AddressRepository extends JpaRepository<Address, Integer> {
     List<Address> findByCustomerId(Integer customerId);
-
     List<Address> findByCustomerIdAndIdNot(Integer customerId, Integer addressId);
-    
     Optional<Address> findByIdAndCustomerId(Integer addressId, Integer customerId);
-
     Optional<Address> findByCustomerIdAndIsDefaultTrue(Integer customerId);
-    
     @Modifying
     @Query("UPDATE Address a SET a.isDefault = false WHERE a.customer.id = :customerId")
     void resetDefaultAddressForCustomer(@Param("customerId") Integer customerId);
