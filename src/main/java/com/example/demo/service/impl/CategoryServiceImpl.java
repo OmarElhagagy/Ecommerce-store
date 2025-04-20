@@ -3,7 +3,6 @@ package com.example.demo.service.impl;
 import com.example.demo.service.CategoryService;
 
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.validation.constraints.Null;
 
 import com.example.demo.entities.Category;
 import com.example.demo.repositories.CategoryRepository;
