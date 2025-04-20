@@ -9,7 +9,7 @@ public interface CategoryService {
     List<Category> findAll();
     Optional<Category> findById(Integer id);
     Optional<Category> findByCategoryName(String name);
-    List<Category> findByCategoryNameContainingIgnoreCase(String name);
+    List<Category> findByCategoryNameContainingIgnoreCase(String keyword);
     boolean existsByCategoryName(String name);
     boolean existsById(Integer id);
     List<Category> findByProductsIsNotEmpty();
