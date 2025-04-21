@@ -126,4 +126,22 @@ public class CustomerServiceImpl implements CustomerService {
         }
         return customerRepository.save(customer);
     }
+
+    @Override
+    public Customer update(Customer customer) {
+        // check if customer exists
+        if (customer.getId() == null || !customerRepository.existsById(customer.getId())) {
+            throw new EntityNotFoundException("Cannot update non-existent customer");
+        }
+
+        // validate customer data
+        validateCustomer(customer);
+
+        // check for duplicate email (excluding current customer)
+        Optional<Customer> existsWithEmail = customerRepository.findByEmail(customer.getEmail());
+        if (existsWithEmail.isPresent() && !existsWithEmail.get().getId().equals(customer.getId())) {
+            throw new IllegalArgumentException("This email is already used by another customer");
+        }
+        return customerRepository.save(customer);
+    }
 }

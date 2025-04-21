@@ -63,6 +63,9 @@ public class Customer {
         return lName;
     }
 
+    @Column(name = "\"Active\"", nullable = false)
+    private boolean active = true;
+
     @NotNull
     @Column(name = "\"Gender\"", nullable = false, length = Integer.MAX_VALUE)
     public String getGender() {
