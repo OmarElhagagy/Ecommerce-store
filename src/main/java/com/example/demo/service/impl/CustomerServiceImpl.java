@@ -11,8 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 public class CustomerServiceImpl implements CustomerService {
 
@@ -23,6 +25,47 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerServiceImpl(CustomerRepository customerRepository, CustomerOrderRepository customerOrderRepository) {
         this.customerRepository = customerRepository;
         this.customerOrderRepository = customerOrderRepository;
+    }
+
+    // validator method
+    private void validateCustomer(Customer customer) {
+        List<String> errors = new ArrayList<>();
+
+        if (customer.getFName() == null || customer.getFName().trim().isEmpty()) {
+            errors.add("First name is required");
+        }
+
+        if(customer.getLName() == null || customer.getLName().trim().isEmpty()) {
+            errors.add("Last name is required");
+        }
+
+        if (customer.getEmail() == null || customer.getEmail().trim().isEmpty()) {
+            errors.add("Email is required");
+        } else if (!isValidEmail(customer.getEmail())) {
+            errors.add("Invalid email format");
+        }
+
+        if (customer.getGender() == null || customer.getGender().trim().isEmpty()) {
+            errors.add("Gender is required");
+        }
+
+        if (customer.getBirthDate() == null) {
+            errors.add("Birth date is required");
+        } else if (customer.getBirthDate().isAfter(LocalDate.now())) {
+            errors.add("Birth date cannot be in the future");
+        }
+
+        // throw combined exceptions if errors found
+        if(!errors.isEmpty()) {
+            throw new IllegalArgumentException("Validation errors found" + String.join(", ", errors));
+        }
+    }
+
+    // validate email format
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        Pattern pattern = Pattern.compile(emailRegex);
+        return pattern.matcher(email).matches();
     }
 
     @Override
@@ -74,6 +117,6 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer save() {
+    public Customer save(Customer customer) {
     }
-} 
+}
