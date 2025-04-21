@@ -21,6 +21,8 @@ public interface CustomerService {
     void deleteById(Integer id);
     boolean existsById(Integer id);
     boolean existsByEmail(String email);
+    Customer restoreCustomer(Integer id);
+    List<Customer> findInactiveCustomers();
     long count();
 
     List<CustomerOrder> getCustomerOrders(Integer customerId);
