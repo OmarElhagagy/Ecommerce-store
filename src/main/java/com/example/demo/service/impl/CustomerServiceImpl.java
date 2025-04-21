@@ -3,6 +3,7 @@ package com.example.demo.service.impl;
 import com.example.demo.entities.Customer;
 import com.example.demo.entities.CustomerOrder;
 import com.example.demo.repositories.CustomerRepository;
+import com.example.demo.repositories.CategoryRepository;
 import com.example.demo.repositories.CustomerOrderRepository;
 import com.example.demo.service.CustomerService;
 import jakarta.persistence.EntityNotFoundException;
@@ -118,5 +119,11 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer save(Customer customer) {
+        validateCustomer(customer);
+
+        if (customerRepository.existsByEmail(customer.getEmail())) {
+            throw new IllegalArgumentException("Email already exists");
+        }
+        return customerRepository.save(customer);
     }
 }
