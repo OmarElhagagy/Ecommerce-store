@@ -66,4 +66,14 @@ public class CustomerServiceImpl implements CustomerService {
     public List<Customer> findByBirthDateRange(LocalDate startDate, LocalDate endDate) {
         return customerRepository.findByBirthDateBetween(startDate, endDate);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Customer> findByGender(String gender) {
+        return customerRepository.findByGender(gender);
+    }
+
+    @Override
+    public Customer save() {
+    }
 } 
