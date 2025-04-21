@@ -15,7 +15,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
     List<Customer> findByFNameContainingIgnoreCase(String name);
     List<Customer> findByLNameContainingIgnoreCase(String name);
     List<Customer> findByBirthDateBefore(LocalDate date);
-    List<Customer> findByBirthDateBetween(LocalDate date);
+    List<Customer> findByBirthDateBetween(LocalDate startDate, LocalDate endDate);
     boolean existsByEmail(String email);
     List<Customer> findByGender(String gender);
 }
