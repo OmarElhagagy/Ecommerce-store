@@ -125,4 +125,12 @@ public class Customer {
         return wishlists;
     }
 
+    // Add getter and setter for Active
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 }
